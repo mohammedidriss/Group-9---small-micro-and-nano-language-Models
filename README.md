@@ -1,6 +1,6 @@
 Contributors:
-\n Mohamad Idriss
-\n Sriram Acharya Mudumbai
+Mohamad Idriss
+Sriram Acharya Mudumbai
 Vibin Chandrabose
 Walid El Mahdy
 Rohit Jacob Issac
