@@ -1,3 +1,10 @@
+Contributors:
+Mohamad Idriss
+Sriram Acharya Mudumbai
+Vibin Chandrabose
+Walid El Mahdy
+Rohit Jacob Issac
+
 This comprehensive script is a complete end-to-end pipeline for fine-tuning a small language model (SLM), building a knowledge base for it to use, interacting with the model via a RAG (Retrieval-Augmented Generation) system, and finally, evaluating its performance with multiple benchmarks.
 
 Here’s a breakdown of each major section:
