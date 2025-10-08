@@ -74,3 +74,13 @@ This is the scientific part of the script, where the model's performance is rigo
           * **MMLU:** A massive multitask test covering 57 different subjects.
           * **HumanEval:** A test for code generation.
       * Finally, it displays a summary of all the benchmark results, giving you a clear picture of your model's capabilities across different domains.
+   
+
+      QLORA Model Performance
+    
+    <img width="509" height="82" alt="Screenshot 2025-10-08 at 6 34 13 PM" src="https://github.com/user-attachments/assets/e0cbd85d-d242-4018-b3d9-ceca1106eccc" />
+
+    QlORA Model Training Results
+    <img width="1138" height="523" alt="Screenshot 2025-10-08 at 6 32 51 PM" src="https://github.com/user-attachments/assets/fc22f39e-195a-47dc-b4b0-87076fd52bd3" />
+
+
