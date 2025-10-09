@@ -141,22 +141,35 @@ Testing Results - NO RAG
 
 **Experiment 2**
 Model Name: distilgpt-2
+
 Compression Ratio: 94% reduction in size
+
 Dataset: Standford questions and answers (SQUAD)
+
 Number of Paramters: 82 Millions
+
 Inferencing Results:
+
 Training Time: 1.24 hours (A100 GPU)
+
 Hallucination exists: Yes
+
  RAG testing Results
+ 
 <img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ded93bf-c603-4101-a370-8afd8b9a97dd" />
 
     
-**Experiment 2**
-Model Name: distilgpt-2
+**Experiment 3**
+Model Name: Microsoft\phi-2
+
 Compression Ratio: 94% reduction in size
+
 Dataset: Standford questions and answers (SQUAD)
+
 Number of Paramters: 82 Millions
+
 Inferencing Results:
+
 Training Time: 6 hours 53 mins (A100 GPU)
 
   * **QLORA with RAG Results:**
