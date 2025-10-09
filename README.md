@@ -126,7 +126,7 @@ This is the scientific part of the script, where the model's performance is rigo
 
 **Dataset:** Databricks 15k
 
-**Number of Paramters:** 82 Millions
+**Number of Paramters:** 2.75 Millions
 
 **Inferencing Results:**
 
@@ -146,8 +146,6 @@ This is the scientific part of the script, where the model's performance is rigo
 **Experiment 2**
 
 **Model Name:** distilgpt-2
-
-**Compression Ratio:** 94% reduction in size
 
 **Dataset:** Standford questions and answers (SQUAD)
 
@@ -173,11 +171,9 @@ This is the scientific part of the script, where the model's performance is rigo
 
 **Model Name:** Microsoft\phi-2
 
-**Compression Ratio:** 94% reduction in size
-
 **Dataset:** Standford questions and answers (SQUAD)
 
-**Number of Paramters:** 82 Millions
+**Number of Paramters:** 2.7B Millions
 
 **Inferencing Results:**
 
