@@ -1,9 +1,7 @@
-Contributors:
-Mohamad Idriss,
-Sriram Acharya Mudumbai,
-Vibin Chandrabose,
-Walid El Mahdy,
-Rohit Jacob Issac
+*****Contributors:*****
+
+Mohamad Idriss     |          Sriram Acharya Mudumbai   | Vibin Chandrabose |   Walid El Mahdy |  Rohit Jacob Issac
+
 
 ### **Achieving High-Fidelity Output from Efficient Small Language Models**
  
