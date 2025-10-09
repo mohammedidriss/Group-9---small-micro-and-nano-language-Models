@@ -7,12 +7,12 @@ Rohit Jacob Issac
 
 ### **Achieving High-Fidelity Output from Efficient Small Language Models**
  
-**Problem Statement** 
+**1 - Problem Statement** 
 
 Large Language Models (LLMs) have demonstrated remarkable capabilities across a wide range of tasks, but their significant computational and financial costs present a major barrier to widespread adoption. Small Language Models (SLMs) offer a compelling alternative due to their efficiency, speed, and reduced resource requirements.
 However, standard SLMs often suffer from a critical flaw: a lack of factual accuracy, leading to a high propensity for "hallucination" where the model generates plausible but incorrect information.This project aimed to investigate and implement methodologies to prove that an SLM can be engineered to be both computationally efficient and factually reliable, approaching the performance of an LLM with only a minor trade-off in accuracy.
 
-**Methodology and Iterative Scenarios**
+**2 - Methodology and Iterative Scenarios**
 
 We conducted a series of three iterative experiments to identify the optimal strategy for building a high-performance SLM.
 
@@ -32,18 +32,27 @@ We conducted a series of three iterative experiments to identify the optimal str
 - **Results:** Optimal Performance. This approach yielded the best results, demonstrating both high accuracy and exceptional computational efficiency during the training process. The model produced coherent, factually correct answers while benefiting from the memory savings of the QLoRA technique.
 - **Analysis:** QLoRA proved to be the most effective method, allowing for the specialization of a more powerful base model than would have been possible with standard fine-tuning, leading to the highest quality outputs.
 
-**Conclusion** 
 
-This project successfully demonstrates that SLMs can serve as a highly efficient and accurate alternative to their larger counterparts, provided they are engineered correctly.
-The key finding is that a combination of two modern techniques is required:
-1 - **Data Quality is Paramount:** The failure of Scenario 1 and the success of Scenarios 2 and 3 prove that the quality, structure, and relevance of the training data are the most critical factors for success. General-purpose, unstructured datasets are insufficient for teaching complex, task-specific skills like contextual reasoning.
-
-2 - **Task-Specific Fine-Tuning:** The SLM must be explicitly trained on a high-quality dataset that matches the target task (e.g., SQuAD for RAG).
-
-3 - **Retrieval-Augmented Generation (RAG):** The model must be grounded in an external knowledge base to ensure factual accuracy and eliminate hallucination.
-
+**4 - How to Run This Project** 
 
 The use of QLoRA in the final scenario further demonstrates that these high-performance models can be created with exceptional computational efficiency, making advanced AI more accessible and sustainable.
+
+This project is organized into a series of Google Colab cells. To replicate the results, run the cells in the provided notebook in order.
+
+- Setup and Dependencies: Installs all necessary libraries and connects to your Google Drive. You must restart the Colab runtime after this cell completes.
+
+* **For scenario 1:**  Fine-tunes the microsoft/phi-2 model on the databrick dataset and saves the final, trained model to your Google Drive for persistence.
+
+* **For scenario 2:** Fine-tunes the distilgpt-2 model on the SQuAD dataset and saves the final, trained model to your Google Drive for persistence.
+
+* **For scenario 3:** QLoRA Fine-Tuning: Fine-tunes the microsoft/phi-2 model on the SQuAD dataset and saves the final, trained model to your Google Drive for persistence.
+
+
+- Build Vector Database: Creates the knowledge base for the RAG system. It processes Wikipedia articles, converts them to vector embeddings, builds a FAISS index for semantic search, and saves it to your Drive.
+
+- for Scenarios 2 and 3: Interactive RAG Chat: Loads the fine-tuned model and vector database from your Drive to launch an interactive chat session where you can ask factual questions.
+
+- Benchmark Evaluation: Runs the fine-tuned model against a suite of standardized academic benchmarks (MMLU, HellaSwag, etc.) to quantitatively measure its performance.
 
 **The full code explanation:**
 This comprehensive script is a complete end-to-end pipeline for fine-tuning a small language model (SLM), building a knowledge base for it to use, interacting with the model via a RAG (Retrieval-Augmented Generation) system, and finally, evaluating its performance with multiple benchmarks.
@@ -60,9 +69,9 @@ Here’s a breakdown of each major section:
 
 This section takes a pre-trained small language model and further trains it on a specific task.
 
-  * **Configuration:** It defines a `ProjectConfig` class to hold all important settings in one place, such as file paths, model names (`distilgpt2`), the dataset to use (`squad`), and training parameters like learning rate and batch size.
+  * **Configuration:** It defines a `ProjectConfig` class to hold all important settings in one place, such as file paths, model names (`Microsoft\phi-2\`distilgpt2`), the dataset to use (`databricks`\`squad`), and training parameters like learning rate and batch size.
   * **Load Base Model:** It downloads "phi-2' for scenarion 1 & 3, `distilgpt2` for scenario 2, a smaller, distilled version of GPT-2, and its tokenizer. This model is chosen because it's small enough to train quickly.
-   * **Prepare SQuAD Dataset:** It loads the Stanford Question Answering Dataset (SQuAD). A custom function then formats this data into a specific "RAG-style" prompt, which looks like this:
+   * **Prepare SQuAD Dataset:** It loads the Databricks\SQuAD. A custom function then formats this data into a specific "RAG-style" prompt, which looks like this:
     ```
     Context: [some paragraph]
     Instruction: [a question about the paragraph]
@@ -108,23 +117,23 @@ This is the scientific part of the script, where the model's performance is rigo
           * **BLEU:** Commonly used for translation quality, it measures precision.
           * **BERTScore:** A more advanced metric that uses embeddings to check if the generated and true answers are semantically similar.
       * It also measures efficiency by calculating the average inference time per answer.
-  * **Standardized Benchmarks:**
-      * It installs the **LM Evaluation Harness**, a standard tool for benchmarking language models.
-      * It runs your model against a set of well-known academic benchmarks:
-          * **HellaSwag:** Commonsense reasoning.
-          * **TruthfulQA:** Measures a model's tendency to generate truthful answers vs. common misconceptions.
-          * **MMLU:** A massive multitask test covering 57 different subjects.
-          * **HumanEval:** A test for code generation.
-      * Finally, it displays a summary of all the benchmark results, giving you a clear picture of your model's capabilities across different domains.
+
 
 ****Results****
+
 **Experiment 1**
-Model Name: Microsoft phi-2 
-Compression Ratio: 94% reduction in size
-Dataset: Databricks 15k
-Number of Paramters: 82 Millions
-Inferencing Results:
-Training Time: 7 hours 12 mins (A100 GPU)
+**Model Name:** Microsoft phi-2
+
+**Compression Ratio:** 94% reduction in size
+
+**Dataset:** Databricks 15k
+
+**Number of Paramters:** 82 Millions
+
+**Inferencing Results:**
+
+**Training Time:** 7 hours 12 mins (A100 GPU)
+
 Testing Results - NO RAG
 
     <img width="1642" height="402" alt="image" src="https://github.com/user-attachments/assets/aa113a75-9aa5-456d-84fb-1e2ca2fd9be2" />
@@ -137,8 +146,15 @@ Dataset: Standford questions and answers (SQUAD)
 Number of Paramters: 82 Millions
 Inferencing Results:
 Training Time: 1.24 hours (A100 GPU)
+Hallucination exists: Yes
  RAG testing Results
-    <img width="1608" height="555" alt="image" src="https://github.com/user-attachments/assets/6a4342b0-21a5-4c78-ba5b-4e44148c17cf" />
+<img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ded93bf-c603-4101-a370-8afd8b9a97dd" />
+
+
+
+ 
+
+    
 **Experiment 2**
 Model Name: distilgpt-2
 Compression Ratio: 94% reduction in size
@@ -155,7 +171,17 @@ Training Time: 6 hours 53 mins (A100 GPU)
     QlORA Model Training Results
     <img width="1138" height="523" alt="Screenshot 2025-10-08 at 6 32 51 PM" src="https://github.com/user-attachments/assets/fc22f39e-195a-47dc-b4b0-87076fd52bd3" />
 
-    
+
+**Conclusion** 
+
+This project successfully demonstrates that SLMs can serve as a highly efficient and accurate alternative to their larger counterparts, provided they are engineered correctly.
+The key finding is that a combination of two modern techniques is required:
+ - **Data Quality is Paramount:** The failure of Scenario 1 and the success of Scenarios 2 and 3 prove that the quality, structure, and relevance of the training data are the most critical factors for success. General-purpose, unstructured datasets are insufficient for teaching complex, task-specific skills like contextual reasoning.
+
+ - **Task-Specific Fine-Tuning:** The SLM must be explicitly trained on a high-quality dataset that matches the target task (e.g., SQuAD for RAG).
+
+ - **Retrieval-Augmented Generation (RAG):** The model must be grounded in an external knowledge base to ensure factual accuracy and eliminate hallucination.
+
    
 
     
