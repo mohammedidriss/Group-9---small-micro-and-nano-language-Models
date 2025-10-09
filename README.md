@@ -132,47 +132,60 @@ This is the scientific part of the script, where the model's performance is rigo
 
 **Inferencing Results:**
 
+**Hallucination exists:** Yes
+
 **Training Time:** 7 hours 12 mins (A100 GPU)
 
-Testing Results - NO RAG
+**Testing Results - NO RAG**
 <img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ba48509-d412-4001-89ac-9715374d95e7" />
+
+** Benchmarks:**
+
+<img width="589" height="262" alt="image" src="https://github.com/user-attachments/assets/83b10bb5-fa2f-4b8f-9de6-424ee8feba09" />
 
 
 
 **Experiment 2**
-Model Name: distilgpt-2
 
-Compression Ratio: 94% reduction in size
+**Model Name:** distilgpt-2
 
-Dataset: Standford questions and answers (SQUAD)
+**Compression Ratio:** 94% reduction in size
 
-Number of Paramters: 82 Millions
+**Dataset:** Standford questions and answers (SQUAD)
 
-Inferencing Results:
+**Number of Paramters:** 82 Millions
 
-Training Time: 1.24 hours (A100 GPU)
+**Inferencing Results:**
 
-Hallucination exists: Yes
+**Training Time:** 1.24 hours (A100 GPU)
 
- RAG testing Results
+**Hallucination exists:** No
+
+ **Testing Results with RAG**
  
 <img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ded93bf-c603-4101-a370-8afd8b9a97dd" />
 
+**Benchmarks**
+
+<img width="347" height="173" alt="image" src="https://github.com/user-attachments/assets/2c3784ea-dbd0-4733-a07f-6dd0e6dc4f8f" />
+
+
     
 **Experiment 3**
-Model Name: Microsoft\phi-2
 
-Compression Ratio: 94% reduction in size
+**Model Name:** Microsoft\phi-2
 
-Dataset: Standford questions and answers (SQUAD)
+**Compression Ratio:** 94% reduction in size
 
-Number of Paramters: 82 Millions
+**Dataset:** Standford questions and answers (SQUAD)
 
-Inferencing Results:
+**Number of Paramters:** 82 Millions
 
-Training Time: 6 hours 53 mins (A100 GPU)
+**Inferencing Results:**
 
-  * **QLORA with RAG Results:**
+**Training Time:** 6 hours 53 mins (A100 GPU)
+
+  * **Testing Results - QLORA with RAG:**
   * QLORA Model Performance
     
     <img width="509" height="82" alt="Screenshot 2025-10-08 at 6 34 13 PM" src="https://github.com/user-attachments/assets/e0cbd85d-d242-4018-b3d9-ceca1106eccc" />
