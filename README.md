@@ -5,6 +5,47 @@ Vibin Chandrabose,
 Walid El Mahdy,
 Rohit Jacob Issac
 
+### **Achieving High-Fidelity Output from Efficient Small Language Models**
+ 
+**Problem Statement** 
+
+Large Language Models (LLMs) have demonstrated remarkable capabilities across a wide range of tasks, but their significant computational and financial costs present a major barrier to widespread adoption. Small Language Models (SLMs) offer a compelling alternative due to their efficiency, speed, and reduced resource requirements.
+However, standard SLMs often suffer from a critical flaw: a lack of factual accuracy, leading to a high propensity for "hallucination" where the model generates plausible but incorrect information.This project aimed to investigate and implement methodologies to prove that an SLM can be engineered to be both computationally efficient and factually reliable, approaching the performance of an LLM with only a minor trade-off in accuracy.
+
+**Methodology and Iterative Scenarios**
+
+We conducted a series of three iterative experiments to identify the optimal strategy for building a high-performance SLM.
+
+**Scenario 1:** Baseline SLM with General-Purpose Fine-Tuning
+- **Approach:** A small language model was trained from scratch using knowledge distillation from a larger teacher model (microsoft/phi-2). The training was performed on a small, general-purpose dataset (databricks/databricks-dolly-15k).
+- **Results:** Failure. The model exhibited severe hallucination and topic drift, often providing repetitive and nonsensical answers.
+- **Analysis:** The low-quality, unstructured dataset and insufficient training were inadequate to teach the model complex reasoning or instruction-following skills. The model learned basic language patterns but lacked any grounding in factual knowledge.
+
+**Scenario 2:** SLM with Task-Specific Fine-Tuning and RAG
+
+- **Approach:** Recognizing the need for a specific skill, we shifted our strategy. We fine-tuned a pre-trained SLM (distilgpt2) directly on the SQuAD (Stanford Question Answering Dataset). This dataset is explicitly designed to teach a model how to answer questions based on a given context. This trained model was then integrated into a Retrieval-Augmented Generation (RAG) pipeline.
+- **Results:** Success. The model's accuracy improved dramatically. When provided with context retrieved from a knowledge base (Wikipedia), the model was able to generate correct, factually grounded answers.
+- **Analysis:** Fine-tuning on a task-specific dataset successfully taught the model the crucial skill of contextual question-answering, which is the core requirement for an effective RAG system.
+
+**Scenario 3:** Advanced SLM with QLoRA Fine-Tuning and RAG
+- **Approach:** To further optimize efficiency, we replaced the standard fine-tuning method with QLoRA (Quantized Low-Rank Adaptation). This advanced technique allows for fine-tuning a larger base model (microsoft/phi-2) with significantly less memory by only training a small set of "adapter" layers. This QLoRA-tuned model was then integrated into the same RAG pipeline. 
+- **Results:** Optimal Performance. This approach yielded the best results, demonstrating both high accuracy and exceptional computational efficiency during the training process. The model produced coherent, factually correct answers while benefiting from the memory savings of the QLoRA technique.
+- **Analysis:** QLoRA proved to be the most effective method, allowing for the specialization of a more powerful base model than would have been possible with standard fine-tuning, leading to the highest quality outputs.
+
+**Conclusion** 
+
+This project successfully demonstrates that SLMs can serve as a highly efficient and accurate alternative to their larger counterparts, provided they are engineered correctly.
+The key finding is that a combination of two modern techniques is required:
+1 - **Data Quality is Paramount:** The failure of Scenario 1 and the success of Scenarios 2 and 3 prove that the quality, structure, and relevance of the training data are the most critical factors for success. General-purpose, unstructured datasets are insufficient for teaching complex, task-specific skills like contextual reasoning.
+
+2 - **Task-Specific Fine-Tuning:** The SLM must be explicitly trained on a high-quality dataset that matches the target task (e.g., SQuAD for RAG).
+
+3 - **Retrieval-Augmented Generation (RAG):** The model must be grounded in an external knowledge base to ensure factual accuracy and eliminate hallucination.
+
+
+The use of QLoRA in the final scenario further demonstrates that these high-performance models can be created with exceptional computational efficiency, making advanced AI more accessible and sustainable.
+
+**The full code explanation:**
 This comprehensive script is a complete end-to-end pipeline for fine-tuning a small language model (SLM), building a knowledge base for it to use, interacting with the model via a RAG (Retrieval-Augmented Generation) system, and finally, evaluating its performance with multiple benchmarks.
 
 Here’s a breakdown of each major section:
@@ -20,14 +61,15 @@ Here’s a breakdown of each major section:
 This section takes a pre-trained small language model and further trains it on a specific task.
 
   * **Configuration:** It defines a `ProjectConfig` class to hold all important settings in one place, such as file paths, model names (`distilgpt2`), the dataset to use (`squad`), and training parameters like learning rate and batch size.
-  * **Load Base Model:** It downloads `distilgpt2`, a smaller, distilled version of GPT-2, and its tokenizer. This model is chosen because it's small enough to train quickly.
-  * **Prepare SQuAD Dataset:** It loads the Stanford Question Answering Dataset (SQuAD). A custom function then formats this data into a specific "RAG-style" prompt, which looks like this:
+  * **Load Base Model:** It downloads "phi-2' for scenarion 1 & 3, `distilgpt2` for scenario 2, a smaller, distilled version of GPT-2, and its tokenizer. This model is chosen because it's small enough to train quickly.
+   * **Prepare SQuAD Dataset:** It loads the Stanford Question Answering Dataset (SQuAD). A custom function then formats this data into a specific "RAG-style" prompt, which looks like this:
     ```
     Context: [some paragraph]
     Instruction: [a question about the paragraph]
     Response: [the answer]
     ```
     Training the model on this format teaches it to answer questions based on a provided context, which is the core idea behind RAG.
+  * ** Scenario 2 dataset** The databricks dataset was deliberitly selected in an attempt to prove that data quality is essential for the accuracy of the model.
   * **Training:** It uses the Hugging Face `Trainer` to fine-tune `distilgpt2` on the formatted SQuAD dataset. The script is smart enough to resume from a previous checkpoint if the training process was interrupted.
   * **Save Model:** Once training is complete, the newly fine-tuned model is saved to your Google Drive.
 
@@ -74,7 +116,37 @@ This is the scientific part of the script, where the model's performance is rigo
           * **MMLU:** A massive multitask test covering 57 different subjects.
           * **HumanEval:** A test for code generation.
       * Finally, it displays a summary of all the benchmark results, giving you a clear picture of your model's capabilities across different domains.
-   
+
+****Results****
+**Experiment 1**
+Model Name: Microsoft phi-2 
+Compression Ratio: 94% reduction in size
+Dataset: Databricks 15k
+Number of Paramters: 82 Millions
+Inferencing Results:
+Training Time: 7 hours 12 mins (A100 GPU)
+Testing Results - NO RAG
+
+    <img width="1642" height="402" alt="image" src="https://github.com/user-attachments/assets/aa113a75-9aa5-456d-84fb-1e2ca2fd9be2" />
+
+
+**Experiment 2**
+Model Name: distilgpt-2
+Compression Ratio: 94% reduction in size
+Dataset: Standford questions and answers (SQUAD)
+Number of Paramters: 82 Millions
+Inferencing Results:
+Training Time: 1.24 hours (A100 GPU)
+ RAG testing Results
+    <img width="1608" height="555" alt="image" src="https://github.com/user-attachments/assets/6a4342b0-21a5-4c78-ba5b-4e44148c17cf" />
+**Experiment 2**
+Model Name: distilgpt-2
+Compression Ratio: 94% reduction in size
+Dataset: Standford questions and answers (SQUAD)
+Number of Paramters: 82 Millions
+Inferencing Results:
+Training Time: 6 hours 53 mins (A100 GPU)
+
   * **QLORA with RAG Results:**
   * QLORA Model Performance
     
@@ -83,12 +155,8 @@ This is the scientific part of the script, where the model's performance is rigo
     QlORA Model Training Results
     <img width="1138" height="523" alt="Screenshot 2025-10-08 at 6 32 51 PM" src="https://github.com/user-attachments/assets/fc22f39e-195a-47dc-b4b0-87076fd52bd3" />
 
-    Testing Results - NO RAG
-
-    <img width="1642" height="402" alt="image" src="https://github.com/user-attachments/assets/aa113a75-9aa5-456d-84fb-1e2ca2fd9be2" />
-
-    RAG testing Results
-    <img width="1608" height="555" alt="image" src="https://github.com/user-attachments/assets/6a4342b0-21a5-4c78-ba5b-4e44148c17cf" />
+    
+   
 
     
 
