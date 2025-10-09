@@ -135,8 +135,8 @@ This is the scientific part of the script, where the model's performance is rigo
 **Training Time:** 7 hours 12 mins (A100 GPU)
 
 Testing Results - NO RAG
+<img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ba48509-d412-4001-89ac-9715374d95e7" />
 
-    <img width="1642" height="402" alt="image" src="https://github.com/user-attachments/assets/aa113a75-9aa5-456d-84fb-1e2ca2fd9be2" />
 
 
 **Experiment 2**
@@ -149,10 +149,6 @@ Training Time: 1.24 hours (A100 GPU)
 Hallucination exists: Yes
  RAG testing Results
 <img width="1108" height="384" alt="Screenshot 2025-10-09 at 12 29 59 PM" src="https://github.com/user-attachments/assets/4ded93bf-c603-4101-a370-8afd8b9a97dd" />
-
-
-
- 
 
     
 **Experiment 2**
